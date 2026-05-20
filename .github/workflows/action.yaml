@@ -1,35 +1,35 @@
 name: Lab 7
-  on:
-    push:
-      branches:
-        - test
-    pull_request:
-      branches:
-        - test
+on:
+  push:
+    branches:
+      - test
+  pull_request:
+    branches:
+      - test
 
-  jobs:
-    test:
-      runs-on: ubuntu-latest
-  
-      steps:
-        - uses: actions/checkout@v4
+jobs:
+  test:
+    runs-on: ubuntu-latest
 
-        - uses: actions/setup-java@v4
-          with:
-            distribution: temurin
-            java-version: 21
-            cache: gradle
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Grant execute permission for Gradle Wrapper
-          run: chmod +x gradlew
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
 
-        - name: Build with Gradle
-          run: ./gradlew build
+      - name: Grant execute permission for Gradle Wrapper
+        run: chmod +x gradlew
 
-        - name: Run backend tests
-          run: ./gradlew test
-          env:
-            MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
+      - name: Build with Gradle
+        run: ./gradlew build
 
-        - name: Generate JaCoCo report
-          run: ./gradlew jacocoTestReport
+      - name: Run backend tests
+        run: ./gradlew test
+        env:
+          MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
+
+      - name: Generate JaCoCo report
+        run: ./gradlew jacocoTestReport
